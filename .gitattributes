@@ -1,0 +1,6 @@
+###############################################################################
+
+# Explicitly declare documentation for the following files
+
+###############################################################################
+examples/**                                  linguist-documentation=false
