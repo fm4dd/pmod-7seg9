@@ -86,7 +86,7 @@ Verilog test program pmod_7seg4_1.v (top-level):
 // Adopted for TM1640 IC protocol from the TM1637 verilog
 // example at https://github.com/alangarf/tm1637-verilog.
 // -------------------------------------------------------
-module pmod_9seg9_1(
+module pmod_7seg9_1(
   input clk,
   output tm_clk,
   output tm_din
@@ -226,11 +226,20 @@ always @(posedge clk) begin
 end
 endmodule
 ```
+
+<img src="images/7seg9-ulx3s-2.jpg" width="640px">
+
+Two 7seg9 PMODs, connected to a ULX3S (Lattice ECP5 85K) board
+
 #### VHDL
 
 TBD
 
-[![7SEG9 PMOD on ULX3S](images/7seg9-ulx3s-2.jpg)](images/7seg9-ulx3s-2.jpg)
+#### Linux
 
-Two 7seg9 PMODs, connected to a ULX3S (Lattice ECP5 85K) board
+Linux 'C' driver code located in [examples/pi-tm1640](examples/pi-tm1640)
+
+<img src="images/7seg9-pmod2rpi-double.png" width="640px">
+
+Two 7seg9 PMODs, connected to a Raspberry Pi via the PMOD2RPI interface board
 
