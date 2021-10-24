@@ -1,5 +1,7 @@
 ## 7SEG9 PMOD
 
+[![.github/workflows/rpi.yml](https://github.com/fm4dd/pmod-7seg9/actions/workflows/rpi.yml/badge.svg)](https://github.com/fm4dd/pmod-7seg9/actions/workflows/rpi.yml)
+
 ### Description
 
 <img src="images/7seg9-top.jpg" width="240px">
