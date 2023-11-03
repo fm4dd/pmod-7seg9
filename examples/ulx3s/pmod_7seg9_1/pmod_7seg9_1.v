@@ -4,7 +4,7 @@
 // Adopted for TM1640 IC protocol from the TM1637 verilog
 // example at https://github.com/alangarf/tm1637-verilog.
 // -------------------------------------------------------
-module pmod_9seg9_1(
+module pmod_7seg9_1(
   input clk,
   output tm_clk,
   output tm_din

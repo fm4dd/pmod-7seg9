@@ -1,23 +1,13 @@
 module tm1640(
-    clk,
-    rst,
-    data_latch,
-    data_in,
-    data_stop_bit,
-    busy,
-    tm_clk,
-    tm_din,
-    );
-
-    input clk;
-    input rst;
-    input data_latch;
-    input [7:0] data_in;
-    input data_stop_bit;
-
-    output reg busy;
-    output reg tm_clk;
-    output reg tm_din;
+   input wire clk,
+   input wire rst,
+   input wire data_latch,
+   input [7:0] data_in,
+   input wire data_stop_bit,
+   output reg busy,
+   output reg tm_clk,
+   output reg tm_din,
+);
 
     reg [7:0] write_byte;
     reg [2:0] write_bit_count;

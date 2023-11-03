@@ -6,7 +6,7 @@ set_io -nowarn RX          6
 set_io -nowarn TX          9
 
 # LEDs and Button
-set_io -nowarn BTN_N      10
+set_io -nowarn rst        10
 set_io -nowarn LEDR_N     11
 set_io -nowarn LEDG_N     37
 
@@ -33,9 +33,6 @@ set_io -nowarn FLASH_IO3  13
 #set_io -nowarn P1A9       46
 #set_io -nowarn P1A10      44
 
-set_io -nowarn tm_clk     44
-set_io -nowarn tm_din     46
-
 # PMOD 1B
 #set_io -nowarn P1B1       43
 #set_io -nowarn P1B2       38
@@ -55,3 +52,6 @@ set_io -nowarn tm_din     46
 #set_io -nowarn P2_8       23
 #set_io -nowarn P2_9       20
 #set_io -nowarn P2_10      18
+
+set_io -nowarn tm_clk     20
+set_io -nowarn tm_din     18

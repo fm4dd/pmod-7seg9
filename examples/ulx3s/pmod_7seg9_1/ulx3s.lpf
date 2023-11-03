@@ -5,7 +5,7 @@
 # IO_TYPE - sets line voltage IO_TYPE=LVCMOS33: set low voltage CMOS at 3.3V.
 # DRIVE - defines the output current.  DRIVE=1: 4mA, DRIVE: 8mA, DRIVE=3: 12mA, DRIVE=4: 16mA
 
-# 7Seg9 PMOD on J2 bottom end (right side GPIO)
+# 7Seg9 PMOD on J2 bottom end (right side GPIO), upper row
 # --------------------------------------------
 LOCATE COMP "tm_clk" SITE U17; # clock pin, J2 pin 14
 LOCATE COMP "tm_din" SITE P16; # data pin, J2 pin 15
@@ -72,8 +72,8 @@ LOCATE COMP "clk" SITE G2;
 IOBUF PORT "clk" PULLMODE=NONE IO_TYPE=LVCMOS33;
 FREQUENCY PORT "clk" 25 MHZ;
 
-LOCATE COMP "btn" SITE R1;
-IOBUF PORT "btn" IO_TYPE=LVCMOS33;
+LOCATE COMP "rst" SITE R1;
+IOBUF PORT "rst" IO_TYPE=LVCMOS33;
 
 LOCATE COMP "led[0]" SITE B2;
 IOBUF PORT "led[0]" IO_TYPE=LVCMOS33;

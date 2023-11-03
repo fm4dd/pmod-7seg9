@@ -15,20 +15,22 @@ reg [18:0] counter;
 reg [7:0] instruction_step;
 reg tm_latch;
 reg [7:0] tm_byte;
-reg tm_end;
+wire tm_end;
 reg tm_busy;
 
-tm1640 disp ( clk, rst, tm_latch, tm_byte, tm_end,
-              tm_busy, tm_clk, tm_din );
+tm1640 disp(.clk(clk),.rst(rst),.data_latch(tm_latch),
+            .data_in(tm_byte),.data_stop_bit(tm_end),
+            .busy(tm_busy),.tm_clk(tm_clk),.tm_din(tm_din)
+           );
 
 always @(posedge clk) begin
-  if (rst) begin   // rst runs only once at start time
+  if (! rst) begin   // rst runs only once at start time
     counter <= 0;
     instruction_step <= 0;
     tm_latch <= 0;
     tm_byte <= 0;
     tm_end <= 0;
-    rst <= 0;
+//    rst <= 1;
   end
   else begin       // start sending the list of instructions
     if (tm_busy == 0 && instruction_step < 13) begin
