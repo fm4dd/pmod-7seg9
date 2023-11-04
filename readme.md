@@ -10,6 +10,8 @@ This PMOD provides a 9-digit (3x3) 7-segment LED display output to FPGA designs 
 
 http://fpga.fm4dd.com/
 
+*Note:* The 7SEG9 PMOD draws 220-250mA current over 9 digits. During power on/off, the peak current can reach 500mA. This needs attention for boards with weak power supply.
+
 ### Schematic
 [![7SEG9 PMOD Schematics](images/7seg9-schema.png)](images/7seg9-schema.png)
 
@@ -37,9 +39,10 @@ The following platform code examples demonstrate the board function for quick ve
 
 | Platform | Test Program location                | Description                                                  |
 |----------|-----------------------------------------|--------------------------------------------------------------|
+| Arduino IDE |[examples/arduino](examples/arduino) | Arduino IDE code (tested on PMOD2RPI Seeedstudio XIAO) |
 | Raspberry Pi|[examples/pi-tm1640](examples/pi-tm1640) | Linux control program in 'C', using the libgpiod interface |
-|IceBreaker|[examples/icebreaker](examples/icebreaker)| Verilog project for the IceBreaker FPGA (Lattice xxx) |
-| ULX3S    |[examples/ulx3s](examples/ulx3s)          | Verilog project for Radiona ULX3S FPGA (Lattice EXP5 FPGA family) |
+|IceBreaker|[examples/icebreaker](examples/icebreaker)| Verilog project for the IceBreaker FPGA (Lattice iCE40 FPGA family) |
+| ULX3S    |[examples/ulx3s](examples/ulx3s)          | Verilog project for Radiona ULX3S FPGA (Lattice ECP5 FPGA family) |
 | GateMate |[examples/gatemate](examples/gatemate)    | Verilog project for the Cologne Chip Gatemate E1 FPGA board |
 
 ### PMOD-7Seg9 Function Tests
