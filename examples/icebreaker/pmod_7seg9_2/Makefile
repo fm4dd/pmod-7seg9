@@ -1,5 +1,5 @@
-PROJ = pmod_7seg9_1
-ADD_SRC = tm1640.v
+PROJ = pmod_7seg9_2
+ADD_SRC = ctl_7seg9.v tm1640.v hexdigit.v
 
 PIN_DEF = icebreaker.pcf
 DEVICE = up5k

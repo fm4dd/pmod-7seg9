@@ -1,0 +1,103 @@
+# ULX3S hardware constraints - Logical Preference File
+# LOCATE COMP - locate drive logic to a particular section within the FPGA fabric.
+# IOBUF  PORT  - configure line as a buffered input or output
+# PULLMODE - set the line resistors. Modes are UP, DOWN, NONE
+# IO_TYPE - sets line voltage IO_TYPE=LVCMOS33: set low voltage CMOS at 3.3V.
+# DRIVE - defines the output current.  DRIVE=1: 4mA, DRIVE: 8mA, DRIVE=3: 12mA, DRIVE=4: 16mA
+
+# 7Seg9 PMOD on J2 bottom end (right side GPIO), upper row
+# --------------------------------------------
+LOCATE COMP "tm_clk" SITE U17; # clock pin, J2 pin 14
+LOCATE COMP "tm_din" SITE P16; # data pin, J2 pin 15
+IOBUF PORT "tm_clk" PULLMODE=UP IO_TYPE=LVCMOS33;
+IOBUF PORT "tm_din" PULLMODE=UP IO_TYPE=LVCMOS33;
+
+#LOCATE COMP "pmod_16led[15]" SITE B11; # D16
+#LOCATE COMP "pmod_16led[14]" SITE C11; # D15
+#LOCATE COMP "pmod_16led[13]" SITE A10; # D14
+#LOCATE COMP "pmod_16led[12]" SITE A11; # D13
+#LOCATE COMP "pmod_16led[11]" SITE A9;  # D12
+#LOCATE COMP "pmod_16led[10]" SITE B10; # D11
+#LOCATE COMP "pmod_16led[9]" SITE B9;  # D10
+#LOCATE COMP "pmod_16led[8]" SITE C10; # D9
+#LOCATE COMP "pmod_16led[7]" SITE A6;  # D8
+#LOCATE COMP "pmod_16led[6]" SITE B6;  # D7
+#LOCATE COMP "pmod_16led[5]" SITE A4;  # D6
+#LOCATE COMP "pmod_16led[4]" SITE A5;  # D5
+#LOCATE COMP "pmod_16led[3]" SITE A2;  # D4
+#LOCATE COMP "pmod_16led[2]" SITE B1;  # D3
+#LOCATE COMP "pmod_16led[1]" SITE C4;  # D2
+#LOCATE COMP "pmod_16led[0]" SITE B4;  # D1
+
+# 8LED2 PMOD connected to J2 (right side GPIO)
+# --------------------------------------------
+LOCATE COMP "pmodledr[7]" SITE U18; # D8 red
+LOCATE COMP "pmodledr[6]" SITE N17; # D7 red
+LOCATE COMP "pmodledr[5]" SITE N16; # D6 red
+LOCATE COMP "pmodledr[4]" SITE L16; # D5 red
+
+LOCATE COMP "pmodledr[3]" SITE U17; # D4 red
+LOCATE COMP "pmodledr[2]" SITE P16; # D3 red
+LOCATE COMP "pmodledr[1]" SITE M17; # D2 red
+LOCATE COMP "pmodledr[0]" SITE L17; # D1 red
+
+LOCATE COMP "pmodledg[7]" SITE C18; # D8 green
+LOCATE COMP "pmodledg[6]" SITE B15; # D7 green
+LOCATE COMP "pmodledg[5]" SITE B17; # D6 green
+LOCATE COMP "pmodledg[4]" SITE C16; # D5 green
+
+LOCATE COMP "pmodledg[3]" SITE D17; # D5 green
+LOCATE COMP "pmodledg[2]" SITE C15; # D2 green
+LOCATE COMP "pmodledg[1]" SITE C17; # D7 green
+LOCATE COMP "pmodledg[0]" SITE D16; # D1 green
+
+IOBUF PORT "pmodledr[0]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledr[1]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledr[2]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledr[3]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledr[4]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledr[5]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledr[6]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledr[7]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledg[0]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledg[1]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledg[2]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledg[3]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledg[4]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledg[5]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledg[6]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+IOBUF PORT "pmodledg[7]" PULLMODE=DOWN IO_TYPE=LVCMOS33;
+
+LOCATE COMP "clk" SITE G2;
+IOBUF PORT "clk" PULLMODE=NONE IO_TYPE=LVCMOS33;
+FREQUENCY PORT "clk" 25 MHZ;
+
+LOCATE COMP "rst" SITE R1;
+IOBUF PORT "rst" IO_TYPE=LVCMOS33;
+
+LOCATE COMP "led[0]" SITE B2;
+IOBUF PORT "led[0]" IO_TYPE=LVCMOS33;
+
+LOCATE COMP "led[1]" SITE C2;
+IOBUF PORT "led[1]" IO_TYPE=LVCMOS33;
+
+LOCATE COMP "led[2]" SITE C1;
+IOBUF PORT "led[2]" IO_TYPE=LVCMOS33;
+
+LOCATE COMP "led[3]" SITE D2;
+IOBUF PORT "led[3]" IO_TYPE=LVCMOS33;
+
+LOCATE COMP "led[4]" SITE D1;
+IOBUF PORT "led[4]" IO_TYPE=LVCMOS33;
+
+LOCATE COMP "led[5]" SITE E2;
+IOBUF PORT "led[5]" IO_TYPE=LVCMOS33;
+
+LOCATE COMP "led[6]" SITE E1;
+IOBUF PORT "led[6]" IO_TYPE=LVCMOS33;
+
+LOCATE COMP "led[7]" SITE H3;
+IOBUF PORT "led[7]" IO_TYPE=LVCMOS33;
+
+LOCATE COMP "gpio0" SITE L2;
+IOBUF PORT "gpio0" IO_TYPE=LVCMOS33;

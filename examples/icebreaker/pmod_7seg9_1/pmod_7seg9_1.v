@@ -1,5 +1,6 @@
 // -------------------------------------------------------
 // This program turns on the display and shows "123456789"
+// Connect pmod-7seg9 to IceBreaker PMOD2 bottom pinrow.
 //
 // Adopted for TM1640 IC protocol from the TM1637 verilog
 // example at https://github.com/alangarf/tm1637-verilog.
@@ -10,7 +11,7 @@ module pmod_7seg9_1(
   output tm_din
 );
 
-reg rst = 1;
+reg rst;
 reg [18:0] counter;
 reg [7:0] instruction_step;
 reg tm_latch;
@@ -18,19 +19,21 @@ reg [7:0] tm_byte;
 wire tm_end;
 reg tm_busy;
 
+initial rst = 0;
+
 tm1640 disp(.clk(clk),.rst(rst),.data_latch(tm_latch),
             .data_in(tm_byte),.data_stop_bit(tm_end),
             .busy(tm_busy),.tm_clk(tm_clk),.tm_din(tm_din)
            );
 
 always @(posedge clk) begin
-  if (! rst) begin   // rst runs only once at start time
+  if (rst) begin   // rst runs only once at start time
     counter <= 0;
     instruction_step <= 0;
     tm_latch <= 0;
     tm_byte <= 0;
     tm_end <= 0;
-//    rst <= 1;
+    rst <= 1;
   end
   else begin       // start sending the list of instructions
     if (tm_busy == 0 && instruction_step < 13) begin

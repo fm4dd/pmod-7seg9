@@ -6,12 +6,11 @@
 // -------------------------------------------------------
 module pmod_7seg9_1(
   input clk,
+  input rst,
   output tm_clk,
   output tm_din
 );
 
-reg rst = 1;
-reg [18:0] counter;
 reg [7:0] instruction_step;
 reg tm_latch;
 reg [7:0] tm_byte;
@@ -23,12 +22,10 @@ tm1640 disp ( clk, rst, tm_latch, tm_byte, tm_end,
 
 always @(posedge clk) begin
   if (rst) begin   // rst runs only once at start time
-    counter <= 0;
     instruction_step <= 0;
     tm_latch <= 0;
     tm_byte <= 0;
     tm_end <= 0;
-    rst <= 0;
   end
   else begin       // start sending the list of instructions
     if (tm_busy == 0 && instruction_step < 13) begin
