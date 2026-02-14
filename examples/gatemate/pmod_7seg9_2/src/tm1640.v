@@ -4,7 +4,12 @@
 // Adopted for TM1640 IC protocol from the TM1637 verilog
 // example at https://github.com/alangarf/tm1637-verilog.
 // -------------------------------------------------------
-module tm1640(
+module tm1640 #(
+    parameter CLK_FREQ = 10_000_000,
+    // TM1640 can handle 1MHz refresh. We stay safe
+    // and calculate cycles for 500kHz refresh rate
+    parameter WAIT_TIME = (CLK_FREQ / 1_000_000)
+)(
    input wire clk,
    input wire rst,
    input wire data_latch,
@@ -12,18 +17,15 @@ module tm1640(
    input wire data_stop_bit,
    output reg busy,
    output reg tm_clk,
-   output reg tm_din,
+   output reg tm_din
 );
 
    reg [7:0] write_byte;
    reg [2:0] write_bit_count;
-   reg write_stop_bit;
-
+   reg       write_stop_bit;
    reg [3:0] cur_state;
    reg [3:0] next_state;
-
-   reg [9:0] wait_count;
-   localparam [9:0] wait_time = 256; // at 12MHz that's about 47uS
+   reg [15:0] wait_count;
 
    localparam [3:0]
       S_IDLE      = 4'h0,
@@ -67,7 +69,7 @@ module tm1640(
                end
                S_WAIT1: begin // watch counter till wait is over
                   wait_count <= wait_count + 1;
-                  if (wait_count == wait_time)
+                  if (wait_count == WAIT_TIME)
                      cur_state <= next_state;
                   end
                S_START: begin

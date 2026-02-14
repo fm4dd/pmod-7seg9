@@ -13,125 +13,121 @@
 //                                 "0-12-44-7"
 //                                  h-mm-ss-t
 //
-// 'rst' is set to FIRE1 (BTN_F1 = R1) and has pos. logic,
-// but is not used. The timing is for Gatemate clk 10MHz
+// Logic: 
+// The 'rst' is set to SW3 and has positive logic.
+// - Single press: Toggle Start/Stop immediately.
+// - Initial state: STOPPED
 // -------------------------------------------------------
-module pmod_7seg9_2(
+module pmod_7seg9_2 #(
+    parameter CLK_FREQ = 10_000_000 // 10MHz for GateMate
+)(
    input wire clk,
-   input wire rst,
+   input wire rst,         // Button SW3
    output wire tm_clk,
-   output wire tm_din
+   output wire tm_din,
+   output wire debug_led
 );
 
-reg tm_busy;
-reg [2:0] level;
-initial level = 3'd4;    // display brightness 4 (0..7)
-reg on;
-reg local_rst;
+reg [2:0] level = 3'd4;  // set LED brightness (0 is min, 7 is max)
+wire on = 1'b1;            
+reg local_rst = 0;         
+wire tm_busy;
 
 // -------------------------------------------------------
-// create LED segment data packed array, because yosys can't
-// handle 2-dimensional port assignments from system verilog.
-// https://old.reddit.com/r/yosys/comments/44d7v6/arrays_as_inputs_to_modules/
+// Counter registers (BCD format)
 // -------------------------------------------------------
-wire [7:0] led_data [0:9];   // LED segment data, 9-digits
-wire [71:0] led_data_packed; // 1-dim array for port handover
-assign led_data_packed[7:0]   = led_data[0];
-assign led_data_packed[15:8]  = led_data[1];
-assign led_data_packed[23:16] = led_data[2];
-assign led_data_packed[31:24] = led_data[3];
-assign led_data_packed[39:32] = led_data[4];
-assign led_data_packed[47:40] = led_data[5];
-assign led_data_packed[55:48] = led_data[6];
-assign led_data_packed[63:56] = led_data[7];
-assign led_data_packed[71:64] = led_data[8];
+reg [3:0] digit_counter = 0;
+reg [3:0] sec_counter = 0;
+reg [3:0] tensec_counter = 0;
+reg [3:0] min_counter = 0;
+reg [3:0] tenmin_counter = 0;
+reg [3:0] hour_counter = 0;
 
-ctl_7seg9 m1(clk, local_rst, led_data_packed, level, on, tm_clk, tm_din, tm_busy);
+reg [23:0] count = 0;      
+reg run = 1'b0;         // Initial state set to STOPPED
 
 // -------------------------------------------------------
-// Convert number data to LED segment patterns
+// LED segment data packed array for Yosys
 // -------------------------------------------------------
-hexdigit d9(data[0], 0, led_data[0]);
-hexdigit d2(data[1], 0, led_data[1]);
-hexdigit d3(data[2], 0, led_data[2]);
-hexdigit d4(data[3], 0, led_data[3]);
-hexdigit d5(data[4], 0, led_data[4]);
-hexdigit d6(data[5], 0, led_data[5]);
-hexdigit d7(data[6], 0, led_data[6]);
-hexdigit d8(data[7], 0, led_data[7]);
-hexdigit d1(data[8], 0, led_data[8]);
+wire [7:0] led_data [0:8];
+wire [71:0] led_data_packed; 
+assign led_data_packed = {led_data[8], led_data[7], led_data[6], led_data[5], 
+                          led_data[4], led_data[3], led_data[2], led_data[1], led_data[0]};
 
 // -------------------------------------------------------
-// create 10Hz clock
+// Sub-module Instantiations
 // -------------------------------------------------------
-reg [23:0] count = 24'd0;
-reg clk_10hz = 1'b0;
+wire press_edge;
+debounce db_inst(clk, rst, press_edge);
 
-always @(posedge clk)
-begin
-   count <= count + 1;
-   if(count == 24'd499999)
-   begin
-      count   <= 0;
-      clk_10hz <= ~clk_10hz;
-      local_rst <= 1;
-   end
-   if(local_rst == 1) local_rst <= 0;
+//ctl_7seg9 m1(clk, local_rst, led_data_packed, level, on, tm_clk, tm_din, tm_busy);
+ctl_7seg9 #(.CLK_FREQ(CLK_FREQ)) m1(
+    .clk(clk), 
+    .rst(local_rst), 
+    .data_pack(led_data_packed), 
+    .level(level), 
+    .on(on), 
+    .tm_clk(tm_clk), 
+    .tm_din(tm_din), 
+    .tm_busy(tm_busy)
+);
+
+// -------------------------------------------------------
+// Convert counter values to segment patterns (Fixed widths and indexing)
+// -------------------------------------------------------
+hexdigit d1({1'b0, hour_counter},   1'b0, led_data[0]);
+hexdigit d2(5'd17,                  1'b0, led_data[1]); // "-"
+hexdigit d3({1'b0, tenmin_counter}, 1'b0, led_data[2]);
+hexdigit d4({1'b0, min_counter},    1'b0, led_data[3]);
+hexdigit d5(5'd17,                  1'b0, led_data[4]); // "-"
+hexdigit d6({1'b0, tensec_counter}, 1'b0, led_data[5]);
+hexdigit d7({1'b0, sec_counter},    1'b0, led_data[6]);
+hexdigit d8(5'd17,                  1'b0, led_data[7]); // "-"
+hexdigit d9({1'b0, digit_counter},  1'b0, led_data[8]);
+
+// -------------------------------------------------------
+// Blink the D1 led of gatemate-e1 at 1Hz as "heartbeat"
+// -------------------------------------------------------
+assign debug_led = run ? (digit_counter >= 5) : 1'b0;
+
+// -------------------------------------------------------
+// Main Control Logic
+// -------------------------------------------------------
+always @(posedge clk) begin
+    local_rst <= 0; 
+
+    // Toggle Run/Stop on button press
+    if (press_edge) begin
+        run <= ~run;
+    end
+
+    // Increment counters if 'run' is active
+    if (run) begin
+        // (CLK_FREQ / 10) gives 10Hz
+        if (count >= (CLK_FREQ / 10) - 1) begin
+            count <= 0;
+            local_rst <= 1; 
+            
+            if (digit_counter == 9) begin
+                digit_counter <= 0;
+                if (sec_counter == 9) begin
+                    sec_counter <= 0;
+                    if (tensec_counter == 5) begin
+                        tensec_counter <= 0;
+                        if (min_counter == 9) begin
+                            min_counter <= 0;
+                            if (tenmin_counter == 5) begin
+                                tenmin_counter <= 0;
+                                hour_counter <= (hour_counter == 9) ? 0 : hour_counter + 1;
+                            end else tenmin_counter <= tenmin_counter + 1;
+                        end else min_counter <= min_counter + 1;
+                    end else tensec_counter <= tensec_counter + 1;
+                end else sec_counter <= sec_counter + 1;
+            end else digit_counter <= digit_counter + 1;
+        end else begin
+            count <= count + 1;
+        end
+    end
 end
-
-// -------------------------------------------------------
-// create time counter display logic
-// -------------------------------------------------------
-reg [3:0] digit_counter;
-reg [3:0] sec_counter;
-reg [3:0] tensec_counter;
-reg [3:0] min_counter;
-reg [3:0] tenmin_counter;
-reg [3:0] hour_counter;
-
-initial begin
-  digit_counter   = 4'd0;
-  sec_counter     = 4'd0;
-  tensec_counter  = 4'd0;
-  min_counter     = 4'd0;
-  tenmin_counter  = 4'd0;
-  hour_counter    = 4'd0;
-end
-
-always @(posedge clk_10hz) begin
-   if(digit_counter == 9) begin
-      digit_counter = 0;
-      if(sec_counter == 9) begin
-         sec_counter = 0;
-         if(tensec_counter == 5) begin
-            tensec_counter = 0;
-            if(min_counter == 9) begin
-               min_counter = 0;
-               if(tenmin_counter == 5) begin
-                  tenmin_counter = 0;
-                  if(hour_counter == 9) hour_counter = 0;
-                  else hour_counter = hour_counter + 1;
-               end
-               else tenmin_counter = tenmin_counter + 1;
-            end
-            else min_counter = min_counter + 1;
-         end
-         else tensec_counter = tensec_counter + 1;
-      end
-      else sec_counter = sec_counter + 1;
-   end
-   else digit_counter = digit_counter + 1;
-end
-
-wire [4:0] data [0:8];          // data to show on digits
-assign data[0] = hour_counter;  // set digit-1 as hours
-assign data[1] = 5'd17;         // set digit-2 as 17 = "-"
-assign data[2] = tenmin_counter;// set digit-3 as ten mins
-assign data[3] = min_counter;   // set digit-4 as minutes
-assign data[4] = 5'd17;         // set digit-5 as 17 = "-"
-assign data[5] = tensec_counter;// set digit-6 as ten secs
-assign data[6] = sec_counter;   // set digit-7 as seconds
-assign data[7] = 5'd17;         // set digit-8 as 17 = "-"
-assign data[8] = digit_counter; // set digit-9 as tenth of s
 
 endmodule

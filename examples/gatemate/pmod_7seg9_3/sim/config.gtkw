@@ -1,0 +1,49 @@
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Wed Feb 11 03:01:24 2026
+[*]
+[dumpfile] "/mnt/hgfs/fpga/hardware/pmod-7seg9/examples/gatemate/pmod_7seg9_3/sim/pmod_7seg9_3_tb.vcd"
+[dumpfile_mtime] "Wed Feb 11 02:54:33 2026"
+[dumpfile_size] 4889791
+[savefile] "/mnt/hgfs/fpga/hardware/pmod-7seg9/examples/gatemate/pmod_7seg9_3/sim/config.gtkw"
+[timestart] 9998770000
+[size] 2307 720
+[pos] 25 204
+*-23.000000 14940600000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] pmod_7seg9_3_tb.
+[treeopen] pmod_7seg9_3_tb.uut.
+[sst_width] 301
+[signals_width] 250
+[sst_expanded] 1
+[sst_vpaned_height] 220
+@28
+pmod_7seg9_3_tb.clk[0]
+pmod_7seg9_3_tb.rst[0]
+pmod_7seg9_3_tb.debug_led[0]
+@200
+-TM1640 Interface
+@28
+pmod_7seg9_3_tb.tm_clk[0]
+pmod_7seg9_3_tb.tm_din[0]
+@201
+-7-Segment Display
+@800022
+#{Left Counter (Down)} (0)pmod_7seg9_3_tb.uut.d_th[3:0] (1)pmod_7seg9_3_tb.uut.d_th[3:0] (2)pmod_7seg9_3_tb.uut.d_th[3:0] (3)pmod_7seg9_3_tb.uut.d_th[3:0] (0)pmod_7seg9_3_tb.uut.d_hu[3:0] (1)pmod_7seg9_3_tb.uut.d_hu[3:0] (2)pmod_7seg9_3_tb.uut.d_hu[3:0] (3)pmod_7seg9_3_tb.uut.d_hu[3:0] (0)pmod_7seg9_3_tb.uut.d_te[3:0] (1)pmod_7seg9_3_tb.uut.d_te[3:0] (2)pmod_7seg9_3_tb.uut.d_te[3:0] (3)pmod_7seg9_3_tb.uut.d_te[3:0] (0)pmod_7seg9_3_tb.uut.d_on[3:0] (1)pmod_7seg9_3_tb.uut.d_on[3:0] (2)pmod_7seg9_3_tb.uut.d_on[3:0] (3)pmod_7seg9_3_tb.uut.d_on[3:0]
+@24
+pmod_7seg9_3_tb.uut.d_th[3:0]
+pmod_7seg9_3_tb.uut.d_hu[3:0]
+pmod_7seg9_3_tb.uut.d_te[3:0]
+pmod_7seg9_3_tb.uut.d_on[3:0]
+@1001200
+-group_end
+@800022
+#{Right Counter (Up)} (0)pmod_7seg9_3_tb.uut.u_th[3:0] (1)pmod_7seg9_3_tb.uut.u_th[3:0] (2)pmod_7seg9_3_tb.uut.u_th[3:0] (3)pmod_7seg9_3_tb.uut.u_th[3:0] (0)pmod_7seg9_3_tb.uut.u_hu[3:0] (1)pmod_7seg9_3_tb.uut.u_hu[3:0] (2)pmod_7seg9_3_tb.uut.u_hu[3:0] (3)pmod_7seg9_3_tb.uut.u_hu[3:0] (0)pmod_7seg9_3_tb.uut.u_te[3:0] (1)pmod_7seg9_3_tb.uut.u_te[3:0] (2)pmod_7seg9_3_tb.uut.u_te[3:0] (3)pmod_7seg9_3_tb.uut.u_te[3:0] (0)pmod_7seg9_3_tb.uut.u_on[3:0] (1)pmod_7seg9_3_tb.uut.u_on[3:0] (2)pmod_7seg9_3_tb.uut.u_on[3:0] (3)pmod_7seg9_3_tb.uut.u_on[3:0]
+@24
+pmod_7seg9_3_tb.uut.u_th[3:0]
+pmod_7seg9_3_tb.uut.u_hu[3:0]
+pmod_7seg9_3_tb.uut.u_te[3:0]
+pmod_7seg9_3_tb.uut.u_on[3:0]
+@1001200
+-group_end
+[pattern_trace] 1
+[pattern_trace] 0

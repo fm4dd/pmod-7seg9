@@ -1,0 +1,14 @@
+## file: gm.ccf
+## hardware pin constraints file for gatemate E1 board
+## #######################################################
+## E1 Evaluation board constraints: 1x cloxk signal SB_A8
+## 8x onboard led and one push button on GPIO bank EB
+## #######################################################
+Pin_in  "clk"       Loc = "IO_SB_A8" | SCHMITT_TRIGGER=true;
+Pin_in  "rst"       Loc = "IO_EB_B0";
+Pin_out "debug_led"  Loc = "IO_EB_B1";
+## #######################################################
+## E1 board PMOD-B constraints PMOD 7SEG9 on lower pinrow
+## #######################################################
+Pin_out "tm_din" Loc = "IO_NB_B6"; # Data
+Pin_out "tm_clk" Loc = "IO_NB_B7"; # Clock

@@ -1,0 +1,35 @@
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Sat Feb 14 05:08:08 2026
+[*]
+[dumpfile] "/mnt/hgfs/fpga/hardware/pmod-7seg9/examples/gatemate/pmod_7seg9_1/sim/pmod_7seg9_1_tb.vcd"
+[dumpfile_mtime] "Sat Feb 14 05:06:04 2026"
+[dumpfile_size] 288910
+[savefile] "/mnt/hgfs/fpga/hardware/pmod-7seg9/examples/gatemate/pmod_7seg9_1/sim/config.gtkw"
+[timestart] 0
+[size] 2449 1285
+[pos] -1 -1
+*-23.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] pmod_7seg9_1_tb.
+[treeopen] pmod_7seg9_1_tb.uut.
+[sst_width] 301
+[signals_width] 200
+[sst_expanded] 1
+[sst_vpaned_height] 439
+@28
+pmod_7seg9_1_tb.clk[0]
+pmod_7seg9_1_tb.tm_clk[0]
+pmod_7seg9_1_tb.tm_din[0]
+pmod_7seg9_1_tb.uut.disp.busy[0]
+@22
+pmod_7seg9_1_tb.uut.disp.cur_state[3:0]
+pmod_7seg9_1_tb.uut.disp.data_in[7:0]
+@28
+pmod_7seg9_1_tb.uut.disp.data_latch[0]
+pmod_7seg9_1_tb.uut.disp.data_stop_bit[0]
+@22
+pmod_7seg9_1_tb.uut.disp.write_byte[7:0]
+@29
+pmod_7seg9_1_tb.uut.disp.write_stop_bit[0]
+[pattern_trace] 1
+[pattern_trace] 0
